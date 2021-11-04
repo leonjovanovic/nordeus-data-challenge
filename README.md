@@ -5,7 +5,7 @@
   * [Cleaning data from generated events in JSON file](#cleaning-data)
   * [Creating Leaderboard table on MySQL Server](#creating-leaderboard)
 
-&nbsp;&nbsp;&nbsp;&nbsp;Generated data is stored in [events.jsonl]() file. Each row in the file represents one event. Event can either be match start, goal or match end. Each event has multiple fields that describe that event in detail.
+&nbsp;&nbsp;&nbsp;&nbsp;Generated data is stored in [events.jsonl](https://github.com/leonjovanovic/nordeus-data-challenge/blob/main/events.jsonl) file. Each row in the file represents one event. Event can either be match start, goal or match end. Each event has multiple fields that describe that event in detail.
 
 ## Cleaning data
 &nbsp;&nbsp;&nbsp;&nbsp;Data is first imported from JSONL file using [Pandas library](https://pandas.pydata.org/docs/reference/api/pandas.io.json.read_json.html) and converted to list of [dictionaries](https://docs.python.org/3/tutorial/datastructures.html#dictionaries). Cleaning process is divided into 4 steps:
@@ -26,4 +26,20 @@
 &nbsp;&nbsp;&nbsp;&nbsp;Last step is deleting ivalid match start/end event pairs, which is done by checking above mentioned match arrays to see if there is any index that exists in one and does not exists in other array. If there is such case, *match_id* is flagged and during second pass every event with that *match_id* will be removed.
 
 ## Creating Leaderboard
-&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp; To get Leaderboard for every league, data had to be inserted into two tables: matches and goals. Match table has *match_id*, *league_id*, *home_club* and *away_club* columns, while goal table has *event_id*, *match_id* and *scoring_club*. They are filled by going throughout cleaned data and inserting it row by row.
+
+&nbsp;&nbsp;&nbsp;&nbsp; From Match and Goal table, Scores table is created which represents Match table with 2 additional columns. Those 2 columns are number of goals that home and away club scored on match. They are calculated by *FULL OUTER JOIN* in SQL between two Goal tables and added to Match table with *LEFT OUTER JOIN*. MySQL does not have *FULL OUTER JOIN* so it was simulated using *UNION* of *LEFT* and *RIGHT OUTER JOIN*. Teams table is also created and it lists every team grouped by league number. 
+
+&nbsp;&nbsp;&nbsp;&nbsp; Leaderboard table is finally created from Scores and Teams tables. Using *LEFT OUTER JOIN* on two queries, victory and draw points are calculated and summed, while goal difference is calculated by different query and added to table again using *LEFT OUTER JOIN*.
+
+![Leaderboard](images/leaderboard.png)
+
+*Leaderboard of league 8 in MySQL*
+
+## Running the application
+
+&nbsp;&nbsp;&nbsp;&nbsp; To run this application, you first need to install Python and clone this repository to your PC. After that, using CMD go to location of local repository and execute `python main.py`. If program started correctly, you need to input MySQL Server informations (username, password and host) and to type number of league whose Leaderboard you want to see.
+
+![CMD Leaderboard](images/cmd_leaderboard.png)
+
+*Leaderboard of league 8 in CMD*
