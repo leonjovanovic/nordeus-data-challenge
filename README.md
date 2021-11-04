@@ -40,7 +40,7 @@
 
 ## Running the application
 
-&nbsp;&nbsp;&nbsp;&nbsp; To run application, you first need to install Python and clone this repository to your PC. After that, using CMD, go to location of local repository and execute `python main.py`. If program started correctly, you need to input MySQL Server informations (username, password and host) and to type number of league whose Leaderboard you want to see.
+&nbsp;&nbsp;&nbsp;&nbsp; To run application, you first need to install Python and clone this repository to your PC. Also you will need [MySQL Server, MySQL Connector for Python](https://dev.mysql.com/downloads/) and [Pandas library](https://pandas.pydata.org/getting_started.html). After that, using CMD, go to location of local repository and execute `python main.py`. If program started correctly, you need to input MySQL Server informations (username, password and host) and to type number of league whose Leaderboard you want to see.
 
 ![CMD Leaderboard](images/cmd_leaderboard.png)
 
