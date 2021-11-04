@@ -7,6 +7,8 @@
 
 &nbsp;&nbsp;&nbsp;&nbsp;Generated data is stored in [events.jsonl](https://github.com/leonjovanovic/nordeus-data-challenge/blob/main/events.jsonl) file. Each row in the file represents one event. Event can either be match start, goal or match end. Each event has multiple fields that describe that event in detail.
 
+&nbsp;&nbsp;&nbsp;&nbsp; [Instructions on starting and using application are at the bottom](#running-the-application)
+
 ## Cleaning data
 &nbsp;&nbsp;&nbsp;&nbsp;Data is first imported from JSONL file using [Pandas library](https://pandas.pydata.org/docs/reference/api/pandas.io.json.read_json.html) and converted to list of [dictionaries](https://docs.python.org/3/tutorial/datastructures.html#dictionaries). Cleaning process is divided into 4 steps:
   * Deleting duplicate events with same *event_id* field.
